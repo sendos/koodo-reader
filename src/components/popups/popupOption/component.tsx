@@ -192,6 +192,11 @@ class PopupOption extends React.Component<PopupOptionProps> {
     this.props.handleOpenMenu(false);
   };
 
+  handleFictionChat = () => {
+    this.props.handleMenuMode("fictionchat");
+    this.props.handleOriginalText(getSelection() || "");
+  };
+
   handleSpeak = () => {
     var msg = new SpeechSynthesisUtterance();
     msg.text = getSelection() || "";
@@ -200,6 +205,8 @@ class PopupOption extends React.Component<PopupOptionProps> {
       window.speechSynthesis.speak(msg);
     }
   };
+
+
 
   render() {
     const PopupProps = {
@@ -232,12 +239,15 @@ class PopupOption extends React.Component<PopupOptionProps> {
                         this.handleSearchBook();
                         break;
                       case 5:
-                        this.handleDict();
+                        this.handleFictionChat();
                         break;
                       case 6:
-                        this.handleSearchInternet();
+                        this.handleDict();
                         break;
                       case 7:
+                        this.handleSearchInternet();
+                        break;
+                      case 8:
                         this.handleSpeak();
                         break;
                       default:

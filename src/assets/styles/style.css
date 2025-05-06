@@ -145,6 +145,9 @@
 .icon-search-book:before {
   content: "\e92f";
 }
+.icon-fictionchat:before {
+  content: "\e92f";
+}
 .icon-digest:before {
   content: "\e927";
 }

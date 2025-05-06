@@ -11,6 +11,7 @@
 .translation-option,
 .speaker-option,
 .search-book-option,
+.fictionchat-option,
 .browser-option,
 .dict-option,
 .wikipedia-option,
@@ -37,6 +38,7 @@
 .translation-option:hover,
 .speaker-option:hover,
 .search-book-option:hover,
+.fictionchat-option:hover,
 .browser-option:hover,
 .dict-option:hover,
 .wikipedia-option:hover,
@@ -48,6 +50,7 @@
 .translation-icon,
 .speaker-icon,
 .search-book-icon,
+.fictionchat-icon,
 .browser-icon,
 .dict-icon,
 .baidu-icon,
@@ -76,6 +79,9 @@
   margin-left: 5px;
 }
 .search-book-icon {
+  color: #6867d1;
+}
+.fictionchat-icon {
   color: #6867d1;
 }
 .browser-icon {

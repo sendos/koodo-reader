@@ -39,6 +39,38 @@ export const getSummaryStream = async (
   );
   return result;
 };
+export const getChatCompletion = async (
+  prompt: string,
+  model: string = "gemma3:27b"
+) => {
+  try {
+    // Default to localhost Ollama endpoint
+    const ollamaUrl = ConfigService.getReaderConfig("ollamaUrl") || "http://localhost:11434";
+    
+    const response = await fetch(`${ollamaUrl}/api/generate`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        model: model,
+        prompt: prompt,
+        stream: false,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Ollama API error: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data.response;
+  } catch (error) {
+    console.error("Error with Ollama API:", error);
+    toast.error(i18n.t("Failed to connect to Ollama API"));
+    return null;
+  }
+};
 export const getDictionary = async (word: string, from: string, to: string) => {
   let readerRequest = await getReaderRequest();
   let result = await readerRequest.getDictionary({ word, from, to });

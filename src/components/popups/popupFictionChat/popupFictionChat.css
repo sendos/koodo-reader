@@ -1,0 +1,157 @@
+.fiction-chat-container {
+  width: 500px;
+  background-color: rgba(255, 255, 255, 0.95);
+  box-shadow: 0px 8px 10px #7e7e7e;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  z-index: 10;
+  border-radius: 8px;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.fiction-chat-title {
+  font-size: 20px;
+  line-height: 24px;
+  margin-bottom: 15px;
+  font-weight: 600;
+  text-align: center;
+  color: #333;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.fiction-chat-content {
+  font-size: 15px;
+  line-height: 1.5;
+  margin-bottom: 15px;
+  color: #555;
+  overflow-wrap: break-word;
+  max-height: 150px;
+  overflow-y: auto;
+  padding: 12px;
+  background-color: #f9f9f9;
+  border-radius: 6px;
+  border-left: 3px solid #4a8fff;
+}
+
+.fiction-chat-response {
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  overflow-wrap: break-word;
+  min-height: 150px;
+  max-height: 350px;
+  overflow-y: auto;
+  padding: 15px;
+  background-color: #f5f5f5;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.fiction-chat-question-container {
+  margin-bottom: 15px;
+}
+
+.fiction-chat-question-label {
+  display: block;
+  font-size: 15px;
+  margin-bottom: 8px;
+  color: #444;
+  font-weight: 500;
+}
+
+.fiction-chat-question-input {
+  width: 100%;
+  height: 80px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 10px;
+  font-size: 14px;
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.fiction-chat-question-input:focus {
+  border-color: #4a8fff;
+}
+
+.fiction-chat-question-input:disabled {
+  background-color: #f5f5f5;
+  opacity: 0.7;
+}
+
+.fiction-chat-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  padding-top: 15px;
+  border-top: 1px solid #eee;
+}
+
+.fiction-chat-model {
+  width: 140px;
+  height: 38px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 0 12px;
+  outline: none;
+  font-size: 14px;
+  background-color: white;
+}
+
+.fiction-chat-button {
+  padding: 8px 18px;
+  background-color: #e0e0e0;
+  color: #333;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.fiction-chat-button-primary {
+  background-color: #4a8fff;
+  color: white;
+}
+
+.fiction-chat-button:hover {
+  background-color: #d0d0d0;
+}
+
+.fiction-chat-button-primary:hover {
+  background-color: #3a7fef;
+}
+
+.fiction-chat-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.fiction-chat-loading {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  border: 2px solid rgba(255,255,255,.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
