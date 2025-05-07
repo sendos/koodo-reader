@@ -25,6 +25,22 @@ export interface PopupFictionChatState {
   originalText: string | undefined;
   userQuestion: string;
   modelName: string;
+  provider: string;
   isLoading: boolean;
   chatHistory: Array<{role: string, content: string}>;
+  showKeyInput: boolean;
+  apiKeyInput: string;
+}
+
+export interface AIModel {
+  id: string;
+  name: string;
+  provider: string;
+}
+
+export interface AIProvider {
+  id: string;
+  name: string;
+  requiresKey: boolean;
+  models: AIModel[];
 }

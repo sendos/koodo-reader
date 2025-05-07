@@ -145,9 +145,6 @@
 .icon-search-book:before {
   content: "\e92f";
 }
-.icon-fictionchat:before {
-  content: "\e92f";
-}
 .icon-digest:before {
   content: "\e927";
 }
@@ -311,4 +308,13 @@
 }
 .icon-dropdown:before {
   content: "\e940";
+}
+.icon-bubbles:before {
+  content: "\e96c";
+}
+.icon-bubbles3:before {
+  content: "\e96f";
+}
+.icon-users:before {
+  content: "\e972";
 }
