@@ -222,32 +222,32 @@ class PopupOption extends React.Component<PopupOptionProps> {
                   key={item.name}
                   className={item.name + "-option"}
                   onClick={() => {
-                    switch (index) {
-                      case 0:
+                    switch (item.name) {
+                      case "note":
                         this.handleNote();
                         break;
-                      case 1:
+                      case "digest":
                         this.handleDigest();
                         break;
-                      case 2:
+                      case "translation":
                         this.handleTrans();
                         break;
-                      case 3:
+                      case "copy":
                         this.handleCopy();
                         break;
-                      case 4:
+                      case "search-book":
                         this.handleSearchBook();
                         break;
-                      case 5:
+                      case "fictionchat":
                         this.handleFictionChat();
                         break;
-                      case 6:
+                      case "dict":
                         this.handleDict();
                         break;
-                      case 7:
+                      case "browser":
                         this.handleSearchInternet();
                         break;
-                      case 8:
+                      case "speaker":
                         this.handleSpeak();
                         break;
                       default:
