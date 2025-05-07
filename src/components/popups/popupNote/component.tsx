@@ -173,7 +173,7 @@ class PopupNote extends React.Component<PopupNoteProps, PopupNoteState> {
     const renderNoteEditor = () => {
       return (
         <div className="note-editor">
-          <div className="note-original-text">{this.state.text}</div>
+          <div className="note-original-text popup-title">{this.state.text}</div>
           <div className="editor-box-parent">
             <textarea className="editor-box" />
           </div>

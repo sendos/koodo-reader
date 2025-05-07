@@ -9,6 +9,16 @@
   z-index: 10;
   border-bottom-left-radius: 0px;
   border-bottom-right-radius: 0px;
+  transition: none;
+}
+
+.popup-title, .fiction-chat-title {
+  cursor: grab;
+  user-select: none;
+}
+
+.popup-title:active, .fiction-chat-title:active {
+  cursor: grabbing;
 }
 @media screen and (max-width: 576px) {
   .popup-box-container {

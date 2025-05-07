@@ -26,4 +26,9 @@ export interface PopupBoxProps {
 export interface PopupBoxStates {
   deleteKey: string;
   rect: DOMRect | null;
+  position: {
+    x: number;
+    y: number;
+  };
+  isDragging: boolean;
 }
