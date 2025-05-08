@@ -23,7 +23,54 @@ class PopupMenu extends React.Component<PopupMenuProps, PopupMenuStates> {
       rect: this.props.rect,
       isRightEdge: false,
     };
+    
+    // Check if we're on iOS with Capacitor
+    this.initializeIOSSupport();
   }
+  
+  // Initialize iOS support if available (done asynchronously to avoid build errors)
+  initializeIOSSupport = async () => {
+    try {
+      // Dynamic import of iOS text selection utils
+      const iOSUtils = await import("../../../utils/reader/iOSTextSelection");
+      
+      if (iOSUtils.isCapacitoriOS()) {
+        iOSUtils.initializeIOSTextSelection();
+        this.setupTextSelectionListener();
+      }
+    } catch (error) {
+      // Not on iOS or Capacitor not available - this is fine
+    }
+  }
+  
+  // Set up event listener for custom text selection events from iOS
+  setupTextSelectionListener() {
+    document.addEventListener('custom-text-selection', (event: any) => {
+      const { x, y, selectedText } = event.detail;
+      if (selectedText) {
+        // Create a DOMRect-like object with all required properties
+        const rectObj = {
+          left: x,
+          bottom: y,
+          top: y - 5, // Approximate top position
+          right: x + 5, // Approximate right position
+          x: x,
+          y: y - 5, // Approximate y position (top)
+          width: 5,
+          height: 5,
+          toJSON: () => ({ x, y, width: 5, height: 5, top: y - 5, right: x + 5, bottom: y, left: x })
+        };
+        
+        // Cast to DOMRect for TypeScript (since we've added all required properties)
+        const rect = rectObj as unknown as DOMRect;
+        
+        this.setState({ rect }, () => {
+          this.showMenu();
+        });
+      }
+    });
+  }
+  
   UNSAFE_componentWillReceiveProps(nextProps: PopupMenuProps) {
     if (nextProps.rect !== this.props.rect) {
       this.setState(
@@ -77,8 +124,33 @@ class PopupMenu extends React.Component<PopupMenuProps, PopupMenuStates> {
     return { posX, posY } as any;
   }
 
-  openMenu = () => {
+  openMenu = async () => {
     this.setState({ deleteKey: "" });
+    
+    // Check if we're on iOS with Capacitor
+    let isiOS = false;
+    try {
+      const iOSUtils = await import("../../../utils/reader/iOSTextSelection");
+      isiOS = iOSUtils.isCapacitoriOS();
+    } catch (e) {
+      // Not on iOS or Capacitor not available
+    }
+    
+    // If we're on iOS with Capacitor, selection is handled differently
+    if (isiOS) {
+      // Just set menu mode and continue (selection is handled by the plugin)
+      this.props.handleChangeDirection(false);
+      if (this.props.isOpenMenu) {
+        this.props.handleMenuMode("");
+        this.props.handleOpenMenu(false);
+        this.props.handleNoteKey("");
+        return;
+      }
+      this.props.handleMenuMode("menu");
+      return;
+    }
+    
+    // Standard web handling for other platforms
     let doc = getIframeDoc();
     if (!doc) return;
     let sel = doc.getSelection();

@@ -20,8 +20,8 @@ class PopupOption extends React.Component<PopupOptionProps> {
     // this.props.handleChangeDirection(false);
     this.props.handleMenuMode("note");
   };
-  handleCopy = () => {
-    let text = getSelection();
+  handleCopy = async () => {
+    let text = await getSelection();
     if (!text) return;
     copy(text);
     this.props.handleOpenMenu(false);
@@ -30,13 +30,15 @@ class PopupOption extends React.Component<PopupOptionProps> {
     doc.getSelection()?.empty();
     toast.success(this.props.t("Copying successful"));
   };
-  handleTrans = () => {
+  handleTrans = async () => {
     this.props.handleMenuMode("trans");
-    this.props.handleOriginalText(getSelection() || "");
+    const text = await getSelection();
+    this.props.handleOriginalText(text || "");
   };
-  handleDict = () => {
+  handleDict = async () => {
     this.props.handleMenuMode("dict");
-    this.props.handleOriginalText(getSelection() || "");
+    const text = await getSelection();
+    this.props.handleOriginalText(text || "");
   };
   handleDigest = async () => {
     if (
@@ -123,48 +125,49 @@ class PopupOption extends React.Component<PopupOptionProps> {
   handleJump = (url: string) => {
     openExternalUrl(url);
   };
-  handleSearchInternet = () => {
+  handleSearchInternet = async () => {
+    const text = await getSelection();
+    
     switch (ConfigService.getReaderConfig("searchEngine")) {
       case "google":
-        this.handleJump("https://www.google.com/search?q=" + getSelection());
+        this.handleJump("https://www.google.com/search?q=" + text);
         break;
       case "baidu":
-        this.handleJump("https://www.baidu.com/s?wd=" + getSelection());
+        this.handleJump("https://www.baidu.com/s?wd=" + text);
         break;
       case "bing":
-        this.handleJump("https://www.bing.com/search?q=" + getSelection());
+        this.handleJump("https://www.bing.com/search?q=" + text);
         break;
       case "duckduckgo":
-        this.handleJump("https://duckduckgo.com/?q=" + getSelection());
+        this.handleJump("https://duckduckgo.com/?q=" + text);
         break;
       case "yandex":
-        this.handleJump("https://yandex.com/search/?text=" + getSelection());
+        this.handleJump("https://yandex.com/search/?text=" + text);
         break;
       case "yahoo":
-        this.handleJump("https://search.yahoo.com/search?p=" + getSelection());
+        this.handleJump("https://search.yahoo.com/search?p=" + text);
         break;
       case "naver":
         this.handleJump(
-          "https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=" +
-            getSelection()
+          "https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=" + text
         );
         break;
       case "baike":
-        this.handleJump("https://baike.baidu.com/item/" + getSelection());
+        this.handleJump("https://baike.baidu.com/item/" + text);
         break;
       case "wiki":
-        this.handleJump("https://en.wikipedia.org/wiki/" + getSelection());
+        this.handleJump("https://en.wikipedia.org/wiki/" + text);
         break;
       default:
         this.handleJump(
           navigator.language === "zh-CN"
-            ? "https://www.baidu.com/s?wd=" + getSelection()
-            : "https://www.google.com/search?q=" + getSelection()
+            ? "https://www.baidu.com/s?wd=" + text
+            : "https://www.google.com/search?q=" + text
         );
         break;
     }
   };
-  handleSearchBook = () => {
+  handleSearchBook = async () => {
     let leftPanel = document.querySelector(".left-panel");
     const clickEvent = new MouseEvent("click", {
       view: window,
@@ -182,7 +185,10 @@ class PopupOption extends React.Component<PopupOptionProps> {
     searchBox.dispatchEvent(focusEvent);
     let searchIcon = document.querySelector(".header-search-icon");
     searchIcon?.dispatchEvent(clickEvent);
-    searchBox.value = getSelection() || "";
+    
+    const text = await getSelection();
+    searchBox.value = text || "";
+    
     const keyEvent: any = new KeyboardEvent("keydown", {
       bubbles: true,
       cancelable: true,
@@ -192,14 +198,16 @@ class PopupOption extends React.Component<PopupOptionProps> {
     this.props.handleOpenMenu(false);
   };
 
-  handleFictionChat = () => {
+  handleFictionChat = async () => {
     this.props.handleMenuMode("fictionchat");
-    this.props.handleOriginalText(getSelection() || "");
+    const text = await getSelection();
+    this.props.handleOriginalText(text || "");
   };
 
-  handleSpeak = () => {
+  handleSpeak = async () => {
     var msg = new SpeechSynthesisUtterance();
-    msg.text = getSelection() || "";
+    const text = await getSelection();
+    msg.text = text || "";
     if (window.speechSynthesis && window.speechSynthesis.getVoices) {
       msg.voice = window.speechSynthesis.getVoices()[0];
       window.speechSynthesis.speak(msg);

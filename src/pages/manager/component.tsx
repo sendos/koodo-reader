@@ -83,7 +83,7 @@ class Manager extends React.Component<ManagerProps, ManagerState> {
   };
   render() {
     let { books } = this.props;
-    if (isMobile && document.location.href.indexOf("192.168") === -1) {
+    if (0 && isMobile && document.location.href.indexOf("192.168") === -1) {  // sendos: added if(0 to disable mobile warning
       return (
         <>
           <p className="waring-title">

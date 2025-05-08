@@ -225,7 +225,8 @@ class BookUtil {
       window.open(
         `${window.location.href.split("#")[0]}#/${ref}/${book.key}?title=${
           book.name
-        }&file=${book.key}`
+        }&file=${book.key}`,
+        "_self" // sendos: added "_self" to open in the same tab
       );
     }
   }

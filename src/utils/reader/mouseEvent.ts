@@ -9,7 +9,33 @@ declare var window: any;
 let throttleTime =
   ConfigService.getReaderConfig("isSliding") === "yes" ? 1000 : 100;
 
-export const getSelection = () => {
+// We'll check for iOS support at runtime, not build time
+let iosSelectionHandler: any = null;
+
+// Try to load iOS selection handler if available
+const loadIOSSelectionHandler = async () => {
+  try {
+    // Dynamic import to prevent build errors
+    const iOSUtils = await import("./iOSTextSelection");
+    if (iOSUtils.isCapacitoriOS()) {
+      iosSelectionHandler = iOSUtils.getIOSSelection;
+    }
+  } catch (e) {
+    // Not on iOS or Capacitor not available - this is fine
+  }
+};
+
+// Try to load iOS handler in background
+loadIOSSelectionHandler();
+
+export const getSelection = async () => {
+  // For iOS with Capacitor, we use our custom text selection handler
+  if (iosSelectionHandler) {
+    const iosSelection = await iosSelectionHandler();
+    if (iosSelection) return iosSelection;
+  }
+  
+  // Standard web selection for other platforms
   let doc = getIframeDoc();
   if (!doc) return;
   let sel = doc.getSelection();
